@@ -1,6 +1,6 @@
-import { features } from "../constants";
+import  {features}  from "../constants";
 
-const FeatureSection = () => {
+export const FeatureSection = () => {
   return (
     <div className="relative mt-20 border-b border-neutral-800 min-h-[800px]">
       <div className="text-center">
@@ -34,5 +34,4 @@ const FeatureSection = () => {
     </div>
   );
 };
-
 export default FeatureSection;

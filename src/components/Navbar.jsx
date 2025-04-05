@@ -1,7 +1,7 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import logo from "../assets/logo.png";
-// import { navItems } from "../constants";
+import { navItems } from "../constants";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
@@ -25,58 +25,16 @@ const Navbar = () => {
               <span className="text-xl tracking-tight">viteR</span>
             </NavLink>
           </div>
-          {/* <ul className="hidden lg:flex ml-14 space-x-12">
+          <ul className="hidden lg:flex ml-14 space-x-12">
             {navItems.map((item, index) => (
               <li key={index}>
-                <Link to={item.href} className="text-white hover:text-orange-500">
+                <NavLink to={item.href} className="text-white hover:text-orange-500">
                   {item.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
-          </ul> */}
-          <ul className="hidden lg:flex ml-14 space-x-12">
-            <li>
-              <NavLink
-                to="/features"
-                // className="text-white hover:text-orange-500"
-                className={({ isActive }) =>
-                  isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                }
-              >
-                Features
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/testimonial"
-                className={({ isActive }) =>
-                  isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                }
-              >
-                Testimonial
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/pricing"
-                className={({ isActive }) =>
-                  isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                }
-              >
-                Pricing
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/workflow"
-                className={({ isActive }) =>
-                  isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                }
-              >
-                Workflow
-              </NavLink>
-            </li>
           </ul>
+          
           <div className="hidden lg:flex justify-center space-x-12 items-center">
             <a href="/signin" className="py-2 px-3 border rounded-md">
               Sign In
@@ -94,78 +52,21 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        {/* {MobileOpen && (
+
+        {MobileOpen && (
           <div className="fixed right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center items-center lg:hidden">
+           
             <ul>
               {navItems.map((item, index) => (
                 <li key={index} className="py-4">
-                  <Link
+                  <NavLink
                     to={item.href}
                     className="text-white hover:text-orange-500"
                   >
                     {item.label}
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
-            </ul>
-            <div className="flex space-x-6">
-              <a href="#" className="py-2 px-3 border rounded-md">
-                Sign In
-              </a>
-              <Link
-                to="/signup"
-                className="bg-gradient-to-r from-orange-500 to-orange-800 py-2 px-3 rounded-md"
-              >
-                Create an account
-              </Link>
-            </div>
-          </div>
-        )} */}
-
-        {MobileOpen && (
-          <div className="fixed right-0 z-20 bg-neutral-900 w-full p-12 flex flex-col justify-center items-center lg:hidden">
-            <ul>
-              {/* Manually adding NavLink for each item */}
-              <li className="py-4">
-                <NavLink
-                  to="/features"
-                  className={({ isActive }) =>
-                    isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                  }
-                >
-                  Features
-                </NavLink>
-              </li>
-              <li className="py-4">
-                <NavLink
-                  to="/testimonial"
-                  className={({ isActive }) =>
-                    isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                  }
-                >
-                  Testimonial
-                </NavLink>
-              </li>
-              <li className="py-4">
-                <NavLink
-                  to="/pricing"
-                  className={({ isActive }) =>
-                    isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                  }
-                >
-                  Pricing
-                </NavLink>
-              </li>
-              <li className="py-4">
-                <NavLink
-                  to="/workflow"
-                  className={({ isActive }) =>
-                    isActive ? "text-orange-500" : "text-white hover:text-orange-500"
-                  }
-                >
-                  Workflow
-                </NavLink>
-              </li>
             </ul>
             <div className="flex space-x-6">
               <a href="/signin" className="py-2 px-3 border rounded-md">

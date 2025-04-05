@@ -4,38 +4,49 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Zod schema for validation
-const schema = z.object({
-  // email: z.string().email("Please enter a valid email address."),
-  email: z
-    .string()
-    .email("Invalid email address")
-    .regex(/\.(in|com)$/, "Email must be from '.in' or '.com' domain"), // Only .in or .com domains allowed
-  username: z.string().min(3, "Username must be at least 3 characters"),
-  name: z.string().min(5, "Name must be at least 5 characters"),
-  password: z.string().min(6, "Password must be at least 6 characters long.").max(12, "Password must not be more than 12 characters"), // Maximum password length,
-  /* confirmPassword: z
-  .string()
-  .min(6, "Password must be at least 6 characters")
-  .superRefine(({ confirmPassword }, ctx) => {
-    const { password } = ctx.parent;
-    // Check if passwords match
-    if (confirmPassword !== password) {
-      ctx.addIssue({
-        code: 'custom',
-        message: "Passwords don't match",
-        path: ['confirmPassword'],
-      });
+const schema = z
+  .object({
+    // email: z.string().email("Please enter a valid email address."),
+    email: z
+      .string()
+      .email("Invalid email address")
+      .regex(/\.(in|com)$/, "Email must be from '.in' or '.com' domain"), // Only .in or .com domains allowed
+    username: z.string().min(3, "Username must be at least 3 characters"),
+    name: z.string().min(5, "Name must be at least 5 characters"),
+    password: z
+      .string()
+      .min(6, "Password must be at least 6 characters long.")
+      .max(12, "Password must not be more than 12 characters"), // Maximum password length,
+    confirmPassword: z
+      .string()
+      .min(6, "Password must be at least 6 characters"),
+    mobile: z
+      .string()
+      .min(10, "Mobile number must be at least 10 digits")
+      .max(15, "Mobile number must not exceed 15 digits"),
+    city: z.string().min(5, "City must be at least 5 characters"),
+    state: z.string().min(5, "State must be at least 5characters"),
+  })
+  .refine(
+    (data) => {
+      console.log('data',data)
+      const { confirmPassword, password } = data;
+      // Check if passwords match
+      if (confirmPassword !== password) {
+        return false;
+        /* ctx.addIssue({
+      code: 'custom',
+      message: "Passwords don't match",
+      path: ['confirmPassword'],
+    }); */
+      }
+      return true;
+    },
+    {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
     }
-  }), */
-
-  mobile: z
-    .string()
-    .min(10, "Mobile number must be at least 10 digits")
-    .max(15, "Mobile number must not exceed 15 digits"),
-  city: z.string().min(5, "City must be at least 5 characters"),
-  state: z.string().min(5, "State must be at least 5characters"),
-});
-
+  );
 
 // SignUp Page component
 const SignUpForm = () => {
@@ -128,10 +139,33 @@ const SignUpForm = () => {
           )}
         </div>
 
+        {/* Confirm Password */}
+        <div className="mb-4">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-white-700"
+          >
+            Confirm Password
+          </label>
+          <input
+            id="confirmPassword"
+            {...register("confirmPassword")}
+            type="password"
+            className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+          />
+          {errors.confirmPassword && (
+            <p className="text-red-500 text-sm">
+              {errors.confirmPassword.message}
+            </p>
+          )}
+        </div>
 
         {/* Mobile */}
         <div className="mb-4">
-          <label htmlFor="mobile" className="block text-sm font-medium text-white-700">
+          <label
+            htmlFor="mobile"
+            className="block text-sm font-medium text-white-700"
+          >
             Mobile Number
           </label>
           <input
@@ -140,12 +174,17 @@ const SignUpForm = () => {
             type="text"
             className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           />
-          {errors.mobile && <p className="text-red-500 text-sm">{errors.mobile.message}</p>}
+          {errors.mobile && (
+            <p className="text-red-500 text-sm">{errors.mobile.message}</p>
+          )}
         </div>
 
         {/* City */}
         <div className="mb-4">
-          <label htmlFor="city" className="block text-sm font-medium text-white-700">
+          <label
+            htmlFor="city"
+            className="block text-sm font-medium text-white-700"
+          >
             City
           </label>
           <input
@@ -154,12 +193,17 @@ const SignUpForm = () => {
             type="text"
             className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           />
-          {errors.city && <p className="text-red-500 text-sm">{errors.city.message}</p>}
+          {errors.city && (
+            <p className="text-red-500 text-sm">{errors.city.message}</p>
+          )}
         </div>
 
         {/* State */}
         <div className="mb-4">
-          <label htmlFor="state" className="block text-sm font-medium text-white-700">
+          <label
+            htmlFor="state"
+            className="block text-sm font-medium text-white-700"
+          >
             State
           </label>
           <input
@@ -168,9 +212,10 @@ const SignUpForm = () => {
             type="text"
             className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
           />
-          {errors.state && <p className="text-red-500 text-sm">{errors.state.message}</p>}
+          {errors.state && (
+            <p className="text-red-500 text-sm">{errors.state.message}</p>
+          )}
         </div>
-
 
         <button
           type="submit"
@@ -193,5 +238,5 @@ const SignUpForm = () => {
     </div>
   );
 };
-  
+
 export default SignUpForm;
